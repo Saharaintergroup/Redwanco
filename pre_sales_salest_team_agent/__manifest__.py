@@ -5,7 +5,7 @@
         'summary': 'Pre-Sales Management',
         'category': 'Sale',
         'author': '',
-        'depends': ['base', 'contacts', 'sale', 'account', 'stock'],
+        'depends': ['base', 'contacts', 'sale', 'account', 'stock','pre_sales_extended'],
         'data': [
                 'views/pre_sale_sale_team_agent.xml'
         ],
