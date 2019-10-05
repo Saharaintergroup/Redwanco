@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pre_sale,access_pre_sale_module,model_sale_zone,base.group_user,1,1,1,1
+access_commercial_line,access_commercial_lines,model_commercial_line,base.group_user,1,1,1,1
+access_delivery_line,access_delivery_lines,model_delivery_line,base.group_user,1,1,1,1
+access_sales_agent,access_sales_agents,model_sales_agent,base.group_user,1,1,1,1
+access_delivery_agent,access_delivery_agents,model_delivery_agent,base.group_user,1,1,1,1
