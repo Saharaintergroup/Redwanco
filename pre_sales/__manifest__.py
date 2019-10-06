@@ -8,7 +8,7 @@
         'maintainer': 'Cybrosys Techno Solutions',
         'company': 'Cybrosys Techno Solutions',
         'website': 'https://www.cybrosys.com',
-        'depends': ['base', 'contacts', 'sale', 'account', 'stock'],
+        'depends': ['base', 'contacts', 'sale', 'account', 'stock','crm.team'],
         'data': ['security/ir.model.access.csv',
                 'views/pre_sale.xml'
         ],
