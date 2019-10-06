@@ -7,8 +7,7 @@ class SaleOrderAgentSalesTeam(models.Model):
 
     agent_id = fields.Many2one('sales.agent', string='Sales Agent')
 
-    @api.multi
-    @api.onchange('partner_id','type_id')
+    @api.onchange('type_id')
     def onchange_partner_ids(self):
         """Show sales agent based on customer zone"""
         if self.partner_id:
