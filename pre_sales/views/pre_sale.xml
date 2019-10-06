@@ -175,6 +175,7 @@
 					<field name="code"/>
 					<field name="agent_name"/>
 					<field name="email"/>
+                    <field name="related_sales_team"/>
                </tree>
             </field>
         </record>

@@ -45,6 +45,7 @@ class SalesAgent(models.Model):
                             help="If unchecked, it will allow you to hide the Sales Agent")
     related_commercial_line = fields.Many2one('commercial.line', string='Commercial Line')
     total_sales = fields.Integer(compute='_compute_total_sales_count')
+    related_sales_team = fields.Many2one('crm.team', string='Sales Team')
 
     def _compute_total_sales_count(self):
 
