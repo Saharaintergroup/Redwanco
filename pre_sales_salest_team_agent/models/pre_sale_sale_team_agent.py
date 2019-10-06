@@ -11,9 +11,9 @@ class SaleOrderAgentSalesTeam(models.Model):
     def onchange_partner__sales_ids(self):
         """Show sales agent based on customer zone and sales team"""
         if self.partner_id:
-            # commercial_line = self.env['commercial.line'].search([('commercial_line', 'in', self.partner_id.zone.id)])
-            # sales_agent = self.env['sales.agent'].search([('related_commercial_line', 'in', commercial_line.ids)])
-            sales_team_agents = self.env['sale.order'].search([('agent_id','in',self.team_id.agent_ids.ids)])
+            commercial_line = self.env['commercial.line'].search([('commercial_line', 'in', self.partner_id.zone.id)])
+            sales_agent = self.env['sales.agent'].search([('related_commercial_line', 'in', commercial_line.ids)])
+            sales_team_agents = self.env['sale.order'].search([('agent_id','in',self.sales_agent.ids)])
 
             domain = {'agent_id': [('id', 'in', sales_team_agents.ids)]}
             return {'domain': domain}
