@@ -13,7 +13,7 @@ class SaleOrderAgentSalesTeam(models.Model):
         if self.partner_id:
             commercial_line = self.env['commercial.line'].search([('commercial_line', 'in', self.partner_id.zone.id)])
             sales_agent = self.env['sales.agent'].search([('related_commercial_line', 'in', commercial_line.ids)])
-            sales_team_agents = self.env['crm.team'].team_id.agent_ids;
+            sales_team_agents = self.env['crm.team'].search(['agent_ids'])
             sales_team_order_agents = self.env['sale.order'].search([('agent_id_sales','in',sales_team_agents)])
 
             domain = {'agent_id_sales': [('id', 'in', sales_team_order_agents.ids)]}
