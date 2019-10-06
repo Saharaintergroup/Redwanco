@@ -19,7 +19,7 @@ class SaleOrderAgentSalesTeam(models.Model):
             teams = self.env['crm.team'].search([])
             for val in teams:
                 for agents in self.team_id.agent_ids:
-                    if agents.id == val.agents_ids.id:
+                    if agents.id == val.agents.id:
                         agent_list.append(val.id)
 
             domain = {'agent_id_sales': [('id', 'in', agent_list)]}
