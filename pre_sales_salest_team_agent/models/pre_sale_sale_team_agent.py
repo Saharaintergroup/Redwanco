@@ -7,7 +7,7 @@ class SaleOrderAgentSalesTeam(models.Model):
 
     agent_id_sales = fields.Many2one('sales.agent', string='Sales Agent')
 """Show sales agent based on customer zone and sales team"""
-    @api.onchange('partner_id','type_id')
+    @api.onchange('partner_id')
     def onchange_partner_sales_ids(self):
         if self.partner_id:
             commercial_line = self.env['commercial.line'].search([('commercial_line', 'in', self.partner_id.zone.id)])
@@ -20,5 +20,5 @@ class SaleOrderAgentSalesTeam(models.Model):
         if self.type_id:
             sales_team = self.env['sale.order.type'].search ([('sales_team_id','in',self.team_id.id)])
             sales_team_order_agents = self.env['sales.agent'].search ([('related_sales_team','in',sales_team.ids)])
-            domain = {'agent_id_sales': [('id', 'in', sales_team_order_agents)]}
+            domain = {'agent_id_sales': [('id', 'in', sales_team_order_agents.ids)]}
             return {'domain': domain}
