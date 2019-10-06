@@ -90,6 +90,8 @@
 							<group>
 								<field name="code"/>
 								<field name="commercial_line"/>
+
+
 							</group>
                     	</group>
                     </sheet>
@@ -175,6 +177,7 @@
 					<field name="code"/>
 					<field name="agent_name"/>
 					<field name="email"/>
+                    <field name="sales_agent_team"/>
                </tree>
             </field>
         </record>
