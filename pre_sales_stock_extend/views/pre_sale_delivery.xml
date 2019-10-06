@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='scheduled_date']" position="after">
                     <field name="delivery_line"/>
+                    <field name="picking_sout" invisible="1"/>
                 </xpath>
             </field>
         </record>
@@ -53,6 +54,7 @@
                                 <field name="create_date"/>
                             </group>
                         </group>
+
                         <notebook>
                             <page string="Picking Lines" name="picking_lines">
                             <field name="picking_lines" >
@@ -60,6 +62,7 @@
                                     <field name="reference"/>
                                     <field name="partner_id"/>
                                     <field name="phone"/>
+                                    <field name="doc_ref"/>
                                     <field name="zone"/>
                             </tree>
                             </field>

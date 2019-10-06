@@ -32,7 +32,7 @@ class PickingOrders(models.Model):
             self.picking_lines = self.env['order.picking'].create({
                 'reference': picking.id,
                 'partner_id': picking.partner_id.id,
-                'phone': picking.partner_id.mobile,
+                'phone': picking.partner_id.phone,
                 'zone': picking.partner_id.zone.id
             })
 
@@ -59,21 +59,23 @@ class SendOutOrders(models.Model):
     _name = 'order.picking'
     _description = "Picking orders in send out form"
 
-    reference = fields.Many2one('stock.picking', String='Reference')
+    reference = fields.Many2one('stock.picking', String='Reference', required=True)
     picking_id = fields.Many2one('picking.order', String='Picking')
     partner_id = fields.Many2one('res.partner', string='Customer')
     phone = fields.Char('Phone')
+    doc_ref = fields.Char('Source Document')
     zone = fields.Many2one('sale.zone', string='Zone')
 
     @api.onchange('reference')
     def onchange_reference(self):
         self.update({
             'partner_id': self.reference.partner_id.id,
-            'phone': self.reference.partner_id.mobile,
-            'zone': self.reference.partner_id.zone.id
+            'phone': self.reference.partner_id.phone,
+            'zone': self.reference.partner_id.zone.id,
+            'doc_ref': self.reference.origin
         })
         pickings = self.env['stock.picking'].search(
-            [('delivery_line', '=', self.picking_id.delivery_line.id)])
+            [('delivery_line', '=', self.picking_id.delivery_line.id),('picking_sout', '=', False)])
         domain = {'reference': [('id', 'in', pickings.ids)]}
         return {'domain': domain}
 
@@ -81,6 +83,8 @@ class SendOutOrders(models.Model):
 class PickingOrder(models.Model):
     _inherit = 'stock.picking'
     _description = "Delivery line in stock picking"
+
+    picking_sout = fields.One2many('order.picking', 'reference', 'Picking Send-Out Form')
 
     @api.model
     def create(self, vals_list):
