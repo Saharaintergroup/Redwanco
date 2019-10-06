@@ -57,7 +57,6 @@ class PatchPaymentLine(models.Model):
     company_id = fields.Many2one('res.company', related='journal_id.company_id', string='Company', readonly=True)
     name = fields.Char('Name', readonly=True , default=lambda x: str('New')) #default=default_randint_value
     partner_id = fields.Many2one('res.partner', string='Customer', required=True)
-    sales_agent = fields.Many2one('sales.agent', string='Sales Agent Line')
     amount = fields.Monetary(string='Payment Amount', required=True)
     currency_id = fields.Many2one('res.currency', string='Currency', required=True, default=lambda self: self.env.user.company_id.currency_id)
     communication = fields.Char(string='Memo')
