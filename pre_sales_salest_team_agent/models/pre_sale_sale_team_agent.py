@@ -6,7 +6,6 @@ class SaleOrderAgentSalesTeam(models.Model):
     _description = "Sales Agents in Sales Teams"
 
     agent_id_sales = fields.Many2one('sales.agent', string='Sales Agent')
-"""Show sales agent based on customer zone and sales team"""
     @api.onchange('partner_id')
     def onchange_partner_sales_ids(self):
         if self.partner_id:
