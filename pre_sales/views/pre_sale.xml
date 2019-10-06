@@ -207,6 +207,7 @@
                             <field name="email" widget="email"/>
 							<field name="mobile" widget="phone"/>
 							<field name="related_commercial_line"/>
+				<field name="related_sales_team"/>
                         </group>
                     </group>
                     </sheet>
