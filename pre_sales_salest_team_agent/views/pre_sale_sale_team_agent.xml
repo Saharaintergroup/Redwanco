@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="pre_sales_extended.sale_order_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='agent_id']" position="replace">
-                    <field name="agent_id"/>
+                    <field name="agent_id_sales"/>
                 </xpath>
             </field>
         </record>
