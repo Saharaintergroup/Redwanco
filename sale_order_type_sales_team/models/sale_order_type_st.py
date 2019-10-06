@@ -15,8 +15,5 @@ class SaleTeam(models.Model):
     @api.multi
     @api.onchange('type_id')
     def onchange_type_id(self):
-        for order in self:
-            order.team_id = order.type_id.sales_team_id.id
-        res = super(SaleTeam, self).onchange_type_id()
-        return res
+        self.team_id = self.type_id.sales_team_id.id
 
