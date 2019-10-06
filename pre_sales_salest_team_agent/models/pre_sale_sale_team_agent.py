@@ -15,5 +15,5 @@ class SaleOrderAgentSalesTeam(models.Model):
             sales_agent = self.env['sales.agent'].search([('related_commercial_line', 'in', commercial_line.ids)])
             sales_team_agents = self.env['crm.team'].search([('agent_ids','in',self.type_id.sales_team_id.agent_ids.ids)])
 
-            domain = {'agent_id': [('id', 'in', sales_team_agents.ids)]}
+            domain = {'agent_id': [('id', 'in', sales_agent.ids)]}
             return {'domain': domain}
