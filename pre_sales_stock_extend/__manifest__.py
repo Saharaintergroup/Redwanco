@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
         'name': 'Inventory Extended for Presale',
-        'version': '12.0.1.0.10',
+        'version': '12.0.1.0.11',
         'summary': 'Inventory Extended for Presales Management',
         'category': 'Sale',
         'author': 'Vinaya S B',

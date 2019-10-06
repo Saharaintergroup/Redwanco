@@ -75,7 +75,7 @@ class SendOutOrders(models.Model):
             'doc_ref': self.reference.origin
         })
         pickings = self.env['stock.picking'].search(
-            [('delivery_line', '=', self.picking_id.delivery_line.id),('picking_sout', '=', False)])
+            [('delivery_line', '=', self.picking_id.delivery_line.id),('picking_sout', '=', False),('picking_type_code', '=', 'outgoing')])
         domain = {'reference': [('id', 'in', pickings.ids)]}
         return {'domain': domain}
 

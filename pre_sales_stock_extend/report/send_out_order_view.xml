@@ -2,48 +2,62 @@
 <odoo>
         <template id="report_send_out_document">
             <t t-call="web.external_layout">
-                <div class="pull-right">
-                    <strong>Created By:</strong><span t-field="o.create_uid"/>
+
+                <div>
+                	<br/>
+                    <table class="col-xs-9 table table-bordered" style='border-style: solid;  border-color:#616161; border-width:2px;padding:20px;width:30%;'>
+                        <tr class="active">
+                            <td><img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.code, 600, 100)" style="width:300px;height:50px;" alt="Barcode"/><br/><center><strong><span t-field="o.code"/></strong></center></td>
+                        </tr>
+                    </table>
                 </div>
-                <strong>Delivery Agent:</strong><span t-field="o.name"/><br/>
-                    <span t-field="o.name.mobile"/><br/>
-                         <strong>Order Date:</strong><span t-esc="o.create_date.strftime('%Y-%m-%d')"/><br/>
-                        <strong>Status:</strong><span t-field="o.state"/><br/>
-                    <div class="row mt32 mb32">
-                        <div class="page">
-                            <div class="oe_structure"/>
-                            <table class="table table-condensed" name="scan_image" style="border: 2px solid black;height:20px;width:20px;">
-                                <tbody class="scan_images">
-                                    <tr border="1">
-                                        <td border="1">
-                                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.code, 600, 100)" style="width:300px;height:50px;" alt="Barcode"/><br/>
-                                        <div style="padding-left: 80px;">
-                                         <strong><span t-field="o.code"/></strong>
-                                        </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                <table class="table table-condensed">
-                    <tbody class="scan_images">
+
+
+                <div class="pull-right">
+                	<div style='padding:5px; font:14px;'>
+                    <strong>Created By : <span t-field="o.create_uid"/></strong>
+                </div>
+
+                    <table class="col-xs-9 table table-bordered" style='border-style: solid;  border-color:#616161; border-width:2px;padding:5px;width: 100%;'>
+                        <tr class="active">
+                            <td><strong>Delivery Agent</strong></td>
+                            <td><span t-field="o.name"/></td>
+                            <td><strong>Delivery Agent Mobile</strong></td>
+                            <td><span t-field="o.name.mobile"/></td>
+                        </tr>
                         <tr>
-                            <th>Reference</th>
-                            <th>Customer</th>
-                            <th>Phone</th>
-                            <th>Zone</th>
+                            <td><strong>Order Date</strong></td>
+                            <td><span t-esc="o.create_date.strftime('%Y-%m-%d')"/></td>
+                            <td><strong>Status</strong></td>
+                            <td><span t-field="o.state"/></td>
+                        </tr>
+                    </table>
+                </div>
+
+				<center><h2>Picking Lines</h2></center>
+
+                    <table class="col-xs-9 table table-bordered" style='border-style: solid;  border-color:#616161; border-width:2px;padding:5px;width: 100%;'>
+                        <tr class="active">
+                            <td><strong>Reference</strong></td>
+                          	<td><strong>Customer</strong></td>
+                            <td><strong>Phone</strong></td>
+                            <td><strong>Source Document</strong></td>
+                            <td><strong>Zone</strong></td>
                         </tr>
                         <t t-foreach="o.picking_lines" t-as="x">
                         <tr>
                             <td><span t-field="x.reference"/></td>
                             <td><span t-field="x.partner_id.name"/></td>
-                            <td><span t-field="x.partner_id.mobile"/></td>
+                            <td><span t-field="x.partner_id.phone"/></td>
+                            <td><span t-field="x.doc_ref"/></td>
                             <td><span t-field="x.partner_id.zone"/></td>
                         </tr>
                         </t>
-                    </tbody>
-                </table>
+                    </table>
+
+
+
+
             </t>
 </template>
 
