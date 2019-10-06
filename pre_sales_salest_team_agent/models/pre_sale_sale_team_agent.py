@@ -18,7 +18,7 @@ class SaleOrderAgentSalesTeam(models.Model):
             for team in crm_team:
                 if team == self.type_id.sales_team_id:
                     newfilter = team.agent_ids
-            if !newfilter:
+            if not newfilter:
                 domain = {'agent_id_sales': [('id', 'in', sales_agent.ids)]}
             else:
                 domain = {'agent_id_sales': [('id', 'in', sales_agent.ids),('id', 'in', newfilter.ids)]}
