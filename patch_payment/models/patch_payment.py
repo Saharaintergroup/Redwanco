@@ -13,6 +13,7 @@ class PatchPayment(models.Model):
     patch_payment_line = fields.One2many('patch.payment.line', 'patch_payment', string='Sales Agent')
     payment_date = fields.Date(string='Payment Date', default=fields.Date.context_today, required=True, copy=False)
     state = fields.Selection([('draft', 'Draft'), ('confirmed', 'Confirmed'), ('sent', 'Sent'), ('reconciled', 'Reconciled'), ('cancelled', 'Cancelled')], readonly=True, default='draft', copy=False, string="Status")
+    company_id = fields.Many2one('res.company', string='Company', required=True, index=True, default=lambda self: self.env.user.company_id)
 
     @api.model
     def create(self, vals):
@@ -34,6 +35,19 @@ class PatchPayment(models.Model):
             })
 
 
+    @api.multi
+    def action_view_patch_payments(self):
+        action = self.env.ref('account.action_account_payments').read()[0]
+        return {
+            'name': _('Patch Account Payments'),
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'account.payment',
+            'view_id': False,
+            'type': 'ir.actions.act_window',
+            'domain': [('patch_ref', '=', self.name)],
+        }
+
 
 
 class PatchPaymentLine(models.Model):
@@ -47,17 +61,18 @@ class PatchPaymentLine(models.Model):
     amount = fields.Monetary(string='Payment Amount', required=True)
     currency_id = fields.Many2one('res.currency', string='Currency', required=True, default=lambda self: self.env.user.company_id.currency_id)
     communication = fields.Char(string='Memo')
-    journal_id = fields.Many2one('account.journal', string='Payment Journal', required=True)
+    journal_id = fields.Many2one('account.journal', string='Payment Journal', required=True, domain=[('type', 'in', ('bank', 'cash'))])
     patch_payment = fields.Many2one('patch.payment', string='patch_payment')
     invoice_ids = fields.Many2many('account.invoice', 'account_invoice_transaction_rel', 'transaction_id', 'invoice_id',
                                    string='Invoices', copy=False, readonly=True)
+    patch_ref = fields.Char(string='Patch Reference' , compute='_compute_patch_ref')
 
-    @api.depends('journal_id')
-    def _compute_operating_unit_id(self):
-        for payment in self:
-            if payment.journal_id:
-                payment.operating_unit_id = \
-                    payment.journal_id.operating_unit_id
+
+    @api.one
+    def _compute_patch_ref(self):
+        for ref in self.patch_payment:
+            self.patch_ref = ref.name
+
 
 
     @api.multi
@@ -77,6 +92,7 @@ class PatchPaymentLine(models.Model):
             'company_id': self.company_id.id,
             'payment_method_id': self.env.ref('account.account_payment_method_manual_in').id,
             'payment_token_id': None,
+            'patch_ref': self.patch_ref,
             'communication': self.communication,
             'writeoff_account_id': False,
         }
@@ -91,10 +107,6 @@ class PatchPaymentLine(models.Model):
         payment.postdraft()
 
         return True
-    operating_unit_id = fields.Many2one(
-        'operating.unit', string='Operating Unit',
-        domain="[('user_ids', '=', uid)]",
-        compute='_compute_operating_unit_id', store=True)
 
 
 
@@ -105,6 +117,7 @@ class account_payment(models.Model):
     _name = "account.payment"
     _inherit = 'account.payment'
 
+    patch_ref = fields.Char(string='Patch Payment Reference')
 
     @api.multi
     def postdraft(self):
