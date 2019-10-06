@@ -6,18 +6,18 @@ class SaleOrderAgentSalesTeam(models.Model):
     _description = "Sales Agents in Sales Teams"
 
     agent_id_sales = fields.Many2one('sales.agent', string='Sales Agent')
-    @api.onchange('partner_id')
+
+
+    @api.onchange('partner_id', 'type_id')
     def onchange_partner_sales_ids(self):
         if self.partner_id:
+            newfilter = None
             commercial_line = self.env['commercial.line'].search([('commercial_line', 'in', self.partner_id.zone.id)])
             sales_agent = self.env['sales.agent'].search([('related_commercial_line', 'in', commercial_line.ids)])
-            domain = {'agent_id_sales': [('id', 'in', sales_agent.ids)]}
+            crm_team = self.env['crm.team'].search([])
+            for team in crm_team:
+                if team == self.type_id.sales_team_id:
+                    newfilter = team.agent_ids
+            domain = {'agent_id_sales': [('id', 'in', sales_agent.ids),('id', 'in', newfilter.ids)]}
             return {'domain': domain}
 
-    @api.onchange('type_id')
-    def onchange_type_sales_ids(self):
-        if self.type_id:
-            sales_team = self.env['sale.order.type'].search ([('sales_team_id','in',self.team_id.id)])
-            sales_team_order_agents = self.env['sales.agent'].search ([('related_sales_team','in',sales_team.ids)])
-            domain = {'agent_id_sales': [('id', 'in', sales_team_order_agents.ids)]}
-            return {'domain': domain}
