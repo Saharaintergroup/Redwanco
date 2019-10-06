@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--  Tree -->
+       <record id="view_patch_payment_tree" model="ir.ui.view">
+            <field name="name">patch.payment.tree</field>
+            <field name="model">patch.payment</field>
+            <field name="arch" type="xml">
+            	<tree>
+                    <field name="payment_date"/>
+                    <field name="sales_agent"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <!--  Main Form -->
+
+
+        <record id="view_patch_payment_form" model="ir.ui.view">
+            <field name="name">patch.payment.form</field>
+            <field name="model">patch.payment</field>
+            <field name="arch" type="xml">
+                <form string="Register Payment">
+                    <header>
+                        <button name="ConfirmPost" class="oe_highlight" states="draft" string="Confirm" type="object" attrs="{'invisible': [('state', 'in', 'confirmed')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
+                    </header>
+                    <sheet>
+                            <group>
+                                <field name="sales_agent" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            </group>
+                            <group>
+                                <field name="payment_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            </group>
+                        <notebook>
+                            <page string="Payment Lines" name="patch_payment_line">
+                            <field name="patch_payment_line" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                <tree string="Payments" editable="bottom">
+	                                <field name="partner_id"/>
+                                    <field name="amount"/>
+                                    <field name="currency_id" options="{'no_create': True, 'no_open': True}" groups="base.group_multi_currency"/>
+                                    <field name="journal_id" widget="selection"/>
+                                    <field name="communication"/>
+                                    <field name="operating_unit_id"/>
+                                <field name="patch_payment" invisible="1"/>
+                            </tree>
+                            </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_patch_payment_line_form" model="ir.ui.view">
+            <field name="name">patch.payment.line.form</field>
+            <field name="model">patch.payment.line</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="patch_payment" invisible="1"/>
+                                <field name="partner_id"/>
+                                <label for="amount"/>
+                                <div name="amount_div" class="o_row">
+                                    <field name="amount"/>
+                                    <field name="currency_id" options="{'no_create': True, 'no_open': True}" groups="base.group_multi_currency"/>
+                                </div>
+                                <field name="journal_id" widget="selection"/>
+                            </group>
+                            <group>
+                                <field name="communication"/>
+                                <field name="operating_unit_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!--  Tree -->
+       <record id="view_patch_payment_line_tree" model="ir.ui.view">
+            <field name="name">patch.payment.line.tree</field>
+            <field name="model">patch.payment.line</field>
+            <field name="arch" type="xml">
+            	<tree>
+                    <field name="partner_id"/>
+                    <field name="amount"/>
+                    <field name="currency_id" options="{'no_create': True, 'no_open': True}" groups="base.group_multi_currency"/>
+                    <field name="journal_id" widget="selection"/>
+                    <field name="communication"/>
+                    <field name="operating_unit_id"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!--  Action -->
+        <record id="action_patch_payments" model="ir.actions.act_window">
+            <field name="name">Patch Payments</field>
+            <field name="res_model">patch.payment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="view_id" ref="view_patch_payment_tree"/>
+        </record>
+        <!--  Action -->
+        <record id="action_patch_line_payments" model="ir.actions.act_window">
+            <field name="name">Patch Payments Line</field>
+            <field name="res_model">patch.payment.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="view_id" ref="view_patch_payment_line_tree"/>
+        </record>
+
+
+
+        <menuitem action="patch_payment.action_patch_payments" id="menu_patch_payments" parent="account.menu_finance_receivables" sequence="4"/>
+
+
+    </data>
+</odoo>

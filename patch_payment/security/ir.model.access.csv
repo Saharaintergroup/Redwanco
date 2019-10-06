@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_patch_payment,patch.payment,patch_payment.model_patch_payment,base.group_user,1,1,1,1
+access_patch_payment_line,patch.payment.line,patch_payment.model_patch_payment_line,base.group_user,1,1,1,1
