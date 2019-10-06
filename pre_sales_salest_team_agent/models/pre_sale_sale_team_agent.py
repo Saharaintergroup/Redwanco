@@ -14,7 +14,7 @@ class SaleOrderAgentSalesTeam(models.Model):
             commercial_line = self.env['commercial.line'].search([('commercial_line', 'in', self.partner_id.zone.id)])
             sales_agent = self.env['sales.agent'].search([('related_commercial_line', 'in', commercial_line.ids)])
             sales_team = self.env['sale.order.type'].browse (['sales_team_id','=',self.type_id.sales_team_id.id])
-            sales_team_order_agents = self.env['sales.agent'].browse ([('agent_id','in',sales_team.agent_ids.ids)])
+            sales_team_order_agents = self.env['sales.agent'].browse ([('agent_id','in',sales_team.sales_team_id.agent_ids.ids)])
             # agent_list = []
             # teams = self.env['crm.team'].search([])
             # for val in teams:
