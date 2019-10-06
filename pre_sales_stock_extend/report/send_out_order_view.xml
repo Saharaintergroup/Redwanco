@@ -2,7 +2,7 @@
 <odoo>
         <template id="report_send_out_document">
             <t t-call="web.external_layout">
-
+            <div class="page">
                 <div>
                 	<br/>
                     <table class="col-xs-9 table table-bordered" style='border-style: solid;  border-color:#616161; border-width:2px;padding:20px;width:30%;'>
@@ -13,11 +13,13 @@
                 </div>
 
 
-                <div class="pull-right">
+                <div>
                 	<div style='padding:5px; font:14px;'>
                     <strong>Created By : <span t-field="o.create_uid"/></strong>
+	                </div>
                 </div>
 
+                <div>
                     <table class="col-xs-9 table table-bordered" style='border-style: solid;  border-color:#616161; border-width:2px;padding:5px;width: 100%;'>
                         <tr class="active">
                             <td><strong>Delivery Agent</strong></td>
@@ -34,8 +36,12 @@
                     </table>
                 </div>
 
-				<center><h2>Picking Lines</h2></center>
 
+				<div>
+				<center><h2>Picking Lines</h2></center>
+				</div>
+
+				<div>
                     <table class="col-xs-9 table table-bordered" style='border-style: solid;  border-color:#616161; border-width:2px;padding:5px;width: 100%;'>
                         <tr class="active">
                             <td><strong>Reference</strong></td>
@@ -54,10 +60,11 @@
                         </tr>
                         </t>
                     </table>
+				</div>
 
 
 
-
+            </div>
             </t>
 </template>
 
