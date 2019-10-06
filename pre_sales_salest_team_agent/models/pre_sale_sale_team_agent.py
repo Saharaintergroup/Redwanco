@@ -8,7 +8,7 @@ class SaleOrderAgentSalesTeam(models.Model):
     agent_id = fields.Many2one('sales.agent', string='Sales Agent')
 
     @api.onchange('type_id')
-    def onchange_partner_ids(self):
+    def onchange_partner_sales_ids(self):
         """Show sales agent based on customer zone"""
         if self.partner_id:
             commercial_line = self.env['commercial.line'].search([('commercial_line', 'in', self.partner_id.zone.id)])
