@@ -5,7 +5,7 @@ class SaleOrderAgentSalesTeam(models.Model):
     _inherit = 'sale.order'
     _description = "Sales Agents in Sales Teams"
 
-    agent_id_sales = fields.Many2one('sales.agent', string='Sales Agent')
+    agent_id_sales = fields.Many2one('sales.agent', string='Sales Agent',required=True)
 
 
     @api.onchange('partner_id', 'type_id')
