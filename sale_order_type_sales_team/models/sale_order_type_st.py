@@ -5,7 +5,7 @@ class SalesTeamSalesType(models.Model):
     _inherit = 'sale.order.type'
     _description = 'Sales Team in sale order type'
 
-    sales_team_id = fields.Many2one('crm.team',string='Sales Team')
+    sales_team_id = fields.Many2one('crm.team',string='Sales Team',required=True)
 
 
 class SaleTeam(models.Model):
